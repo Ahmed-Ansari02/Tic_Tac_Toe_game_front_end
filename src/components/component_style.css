@@ -1,0 +1,18 @@
+.square{
+    height: 100%;
+    width: 100%;
+    border: solid white 1px;
+    background-color: black;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.board{
+    height: 65%;
+    width: 65%; 
+    border: solid white 1px;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-template-rows: repeat(3,1fr);
+}
