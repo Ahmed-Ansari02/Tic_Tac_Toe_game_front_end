@@ -16,7 +16,23 @@ function Board() {
     console.log(Markedarray);
   }, [Markedarray]);
 
- 
+  function calculate_winner(arr) {
+    let temp_array = [];
+    for (let i = 0; i < 3; i++) {
+      for (let j = i * 3; j < (i * 3 + 3); j++) {
+        if (!arr[j]){
+          temp_array.push("NA")
+        }
+        temp_array.push(arr[j]);
+      }
+      if (temp_array[0] === temp_array[1] && temp_array[0] === temp_array[2]) {
+        console.log("winner is " + temp_array[0]);
+        break;
+      }
+      temp_array = [];
+    }
+  }
+  calculate_winner(Markedarray);
   return (
     <>
       <h1>{`Turn of ${player}`}</h1>
