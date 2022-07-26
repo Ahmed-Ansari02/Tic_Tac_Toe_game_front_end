@@ -6,36 +6,61 @@ import { useState, useEffect } from "react";
 function Board() {
   const [Markedarray, setMarkedarray] = useState(new Array(9).fill(null));
   const [player, setplayer] = useState("X");
+  const [winner, setwinner] = useState(null);
   function onclick(id) {
-    setMarkedarray((Markedarray) =>
-      Markedarray.map((value, index) => (index === id ? player : value))
-    );
-    setplayer((p) => (p === "X" ? "O" : "X"));
+    if (!winner) {
+      setMarkedarray((Markedarray) =>
+        Markedarray.map((value, index) => (index === id ? player : value))
+      );
+      setplayer((p) => (p === "X" ? "O" : "X"));
+    }
   }
   useEffect(() => {
     console.log(Markedarray);
-  }, [Markedarray]);
+  });
 
   function calculate_winner(arr) {
-    let temp_array = [];
-    for (let i = 0; i < 3; i++) {
-      for (let j = i * 3; j < (i * 3 + 3); j++) {
-        if (!arr[j]){
-          temp_array.push("NA")
+    if (!winner) {
+      for (let i = 0; i < 3; i++) {
+        let index = 3 * i;
+        if (!arr[index]) {
+          continue;
         }
-        temp_array.push(arr[j]);
+        if (arr[index] === arr[index + 1] && arr[index] === arr[index + 2]) {
+          console.log("winner is (horizontally)" + arr[index]);
+          setwinner(arr[index]);
+          break;
+        }
       }
-      if (temp_array[0] === temp_array[1] && temp_array[0] === temp_array[2]) {
-        console.log("winner is " + temp_array[0]);
-        break;
+      for (let i = 0; i < 3; i++) {
+        let index = i;
+        if (!arr[index]) {
+          continue;
+        }
+        if (arr[index] === arr[index + 3] && arr[index] === arr[index + 6]) {
+          console.log("winner is (vertically)" + arr[index]);
+          setwinner(arr[index]);
+          break;
+        }
       }
-      temp_array = [];
+      if (arr[0] === arr[4] && arr[0] === arr[8] && arr[0] !== null) {
+        console.log("winner (diagonally)" + arr[0]);
+        setwinner(arr[0]);
+      }
+
+      if (arr[2] === arr[4] && arr[2] === arr[6] && arr[2] !== null) {
+        console.log("winner (diagonally)" + arr[2]);
+        setwinner(arr[2]);
+      }
     }
   }
   calculate_winner(Markedarray);
+
   return (
     <>
-      <h1>{`Turn of ${player}`}</h1>
+      <h1 className="heading">
+        {winner ? `winner is ${winner} !` : `Turn of ${player}`}
+      </h1>
       <div className="board">
         {Markedarray.map((value, index) => {
           return value ? (

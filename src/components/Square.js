@@ -10,7 +10,7 @@ function Square({ id, marked, onclick }) {
           onclick(id);
         }
       }}>
-      {marked ? marked : id}
+      {marked ? marked:""}
     </div>
   );
 }
