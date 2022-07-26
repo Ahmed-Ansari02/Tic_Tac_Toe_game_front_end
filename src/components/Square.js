@@ -1,10 +1,18 @@
-import React from 'react'
-import "./component_style.css"
+import React from "react";
+import "./component_style.css";
 
-function Square({id, onclick}) {
+function Square({ id, marked, onclick }) {
   return (
-    <div className='square' onClick={()=>onclick(id)}>{id+1}</div>
-  )
+    <div
+      className="square"
+      onClick={() => {
+        if (!marked) {
+          onclick(id);
+        }
+      }}>
+      {marked ? marked : id}
+    </div>
+  );
 }
 
-export default Square
+export default Square;
