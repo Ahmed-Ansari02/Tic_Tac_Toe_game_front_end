@@ -3,6 +3,7 @@ import Square from "./Square";
 import "./component_style.css";
 import { useState, useEffect } from "react";
 
+
 function Board() {
   const [Markedarray, setMarkedarray] = useState(new Array(9).fill(null));
   const [player, setplayer] = useState("X");
