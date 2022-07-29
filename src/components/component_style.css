@@ -11,8 +11,11 @@
     font-weight: bold;
 }
 .board{
-    height: 65%;
-    width: 65%; 
+    height: 60vw;
+    width: 60vw;
+
+    max-height: 480px;
+    max-width: 480px; 
     border: solid white 1px;
     display: grid;
     grid-template-columns: repeat(3,1fr);
