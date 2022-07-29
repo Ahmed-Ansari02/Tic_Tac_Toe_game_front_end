@@ -2,10 +2,8 @@ import React from "react";
 import Square from "./Square";
 import "./component_style.css";
 import { useState, useEffect } from "react";
-import {io} from "socket.io-client"
-const socket = io("http://localhost:5000");
 
-function Board() {
+function Board({socket}) {
   const [Markedarray, setMarkedarray] = useState(new Array(9).fill(null));
   const [player, setplayer] = useState("X");
   const [winner, setwinner] = useState(null);
@@ -19,9 +17,11 @@ function Board() {
   }
   useEffect(() => {
     socket.volatile.emit("board_state_update", Markedarray)
+    console.log(Markedarray)
   },[Markedarray]);
   socket.on("sync_board_state", board_state=>{
-    setMarkedarray(board_state)
+    console.log(board_state)
+    //setMarkedarray(board_state)
   })
 
   function calculate_winner(arr) {

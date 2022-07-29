@@ -25,3 +25,8 @@
     color: white;
     font-weight: bold;
 }
+.form_box{
+    display: flex;
+    flex-direction: column;
+    
+}
