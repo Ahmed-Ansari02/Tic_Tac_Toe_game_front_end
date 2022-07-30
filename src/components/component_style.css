@@ -28,5 +28,7 @@
 .form_box{
     display: flex;
     flex-direction: column;
+    color: black;
+    font-weight: bold;
     
 }

@@ -3,27 +3,32 @@ import Square from "./Square";
 import "./component_style.css";
 import { useState, useEffect } from "react";
 
-function Board({socket}) {
+function Board({ socket, player }) {
+  const [curr_player, setcurr_player] = useState("X");
   const [Markedarray, setMarkedarray] = useState(new Array(9).fill(null));
-  const [player, setplayer] = useState("X");
   const [winner, setwinner] = useState(null);
+  const [Ready, setReady] = useState(false);
   function onclick(id) {
-    if (!winner) {
+    if (Markedarray.find((element) => element !== null)) {
+      socket.emit("board_state_update", Markedarray);
+    }
+    if (!winner && Ready) {
       setMarkedarray((Markedarray) =>
         Markedarray.map((value, index) => (index === id ? player : value))
       );
-      setplayer((p) => (p === "X" ? "O" : "X"));
     }
   }
-  useEffect(() => {
-    socket.volatile.emit("board_state_update", Markedarray)
-    console.log(Markedarray)
-  },[Markedarray]);
-  socket.on("sync_board_state", board_state=>{
-    console.log(board_state)
-    //setMarkedarray(board_state)
-  })
-
+  //useEffect(() => {}, [Markedarray]);
+  socket.on("sync_board_state", (board_state, player) => {
+    console.log(board_state);
+    if (board_state !== "wait for players") {
+      setMarkedarray(board_state);
+      setcurr_player(player);
+    }
+  });
+  socket.on("Ready", (value, id) => {
+    setReady(value);
+  });
   function calculate_winner(arr) {
     if (!winner) {
       for (let i = 0; i < 3; i++) {
@@ -64,7 +69,7 @@ function Board({socket}) {
   return (
     <>
       <h1 className="heading">
-        {winner ? `winner is ${winner} !` : `Turn of ${player}`}
+        {winner ? `winner is ${winner} !` : `Turn of ${curr_player}`}
       </h1>
       <div className="board">
         {Markedarray.map((value, index) => {
