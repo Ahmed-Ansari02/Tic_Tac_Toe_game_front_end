@@ -1,6 +1,7 @@
 import "./App.css";
 import Tic_tac_toe_board from "./pages/tic_tac_toe_board/Tic_tac_toe_board";
 import Login_screen from "./pages/login_screen/Login_box";
+import Navbar from "../src/components/nav_bar/Nav_bar"
 import { useState } from "react";
 import { io } from "socket.io-client";
 const socket = io("https://tictac-toe-server.herokuapp.com");
@@ -19,6 +20,7 @@ function App() {
   }
   return (
     <div className="App">
+    <Navbar/>
       {Login ? (
         <Tic_tac_toe_board
           socket={socket}

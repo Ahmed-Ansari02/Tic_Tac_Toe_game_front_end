@@ -3,5 +3,7 @@
   background-color: #282c34;
   width: 100vw;
   height: 100vh;
+  display: grid;
+  grid-template-rows: 40px 1fr;
 }
 
