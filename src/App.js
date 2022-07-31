@@ -3,8 +3,7 @@ import Tic_tac_toe_board from "./pages/tic_tac_toe_board/Tic_tac_toe_board";
 import Login_screen from "./pages/login_screen/Login_screen";
 import { useState } from "react";
 import { io } from "socket.io-client";
-const socket = io("http://localhost:5000");
-let player;
+const socket = io("https://tictac-toe-server.herokuapp.com");
 
 function App() {
   const [Login, setLogin] = useState(null);
