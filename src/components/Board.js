@@ -8,7 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 function Board({ socket, player, competitor, name }) {
   const [curr_player, setcurr_player] = useState("X");
   const [Markedarray, setMarkedarray] = useState(new Array(9).fill(null));
-  const [winner, setwinner] = useState(true);
+  const [winner, setwinner] = useState(null);
   const [Ready, setReady] = useState(false);
   const [Reset, setReset] = useState(false);
   const [Winnings, setWinnings] = useState();
