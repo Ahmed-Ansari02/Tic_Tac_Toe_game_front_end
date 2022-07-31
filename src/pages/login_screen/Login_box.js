@@ -28,7 +28,7 @@ function Login_box({ socket, user_login }) {
   return (
     <div className="login_screen">
       <form
-        className="form_box"
+        className="form"
         onSubmit={(e) => {
           e.preventDefault();
 
@@ -72,10 +72,11 @@ function Login_box({ socket, user_login }) {
             progress: undefined,
           });
         }}>
-        <input type="text" placeholder="Enter user name" name="username" />
-        <div>
+        <input type="text" placeholder="Enter user name" name="username" className="input_box"/>
+        <div hidden={!Players_list.length}>
           <p>Select a player</p>
           <select
+           className="input_box"
             name="players"
             onChange={(e) => {
               if (Players_list.length !== 0) {
@@ -98,13 +99,13 @@ function Login_box({ socket, user_login }) {
         </div>
 
         <div>
-          <p>Select your preferred symbol</p>
-          <select name="symbol">
+        {!Players_list.length?<p>Select your preferred symbol</p>:<p>Your symbol will be</p>}
+          <select name="symbol" className="input_box black_font">
             {Players_list.length ? Available_symbol : default_symbol}
           </select>
         </div>
 
-        <input type="submit" />
+        <button className="btn_basic">Enter</button>
       </form>
       <ToastContainer
         position="top-center"
