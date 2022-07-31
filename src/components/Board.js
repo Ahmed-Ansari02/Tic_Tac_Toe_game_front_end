@@ -4,7 +4,6 @@ import "./component_style.css";
 import { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Socket } from "socket.io-client";
 
 function Board({ socket, player, competitor }) {
   const [curr_player, setcurr_player] = useState("X");
@@ -112,7 +111,7 @@ function Board({ socket, player, competitor }) {
       )}
       {competitor ? (
         <p className="heading">You are playing against {competitor}</p>
-      ) : null}
+      ) : <p className="heading">Please wait for players to join</p>}
       <ToastContainer
         position="top-center"
         autoClose={5000}
