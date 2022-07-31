@@ -99,10 +99,12 @@ function Board({ socket, player, competitor }) {
         })}
       </div>
 
-      {winner ? (
-        <button className="rematch_btn" onClick={() => {
-          socket.emit("rematch_req")
-        }}>
+      {winner || Markedarray.filter((value) => value !== null).length === 9 ? (
+        <button
+          className="rematch_btn"
+          onClick={() => {
+            socket.emit("rematch_req");
+          }}>
           Press for rematch{" "}
         </button>
       ) : (
