@@ -8,6 +8,7 @@ function Board({ socket, player }) {
   const [Markedarray, setMarkedarray] = useState(new Array(9).fill(null));
   const [winner, setwinner] = useState(null);
   const [Ready, setReady] = useState(false);
+  const [Reset, setReset]=useState(false)
   function onclick(id) {
     if (!winner && Ready && player === curr_player) {
       socket.emit("board_state_update", id);
@@ -16,6 +17,13 @@ function Board({ socket, player }) {
       );
     }
   }
+  if (Reset){
+    alert("Oh no! your competitor has quit, you are being redirected to the login page to start a new game")
+    window.location.reload(); 
+  }
+  socket.on("Reset",(value)=>{
+      setReset(value)
+  })
 
   socket.on("sync_board_state", (board_state, winner, player) => {
     console.log(board_state);
