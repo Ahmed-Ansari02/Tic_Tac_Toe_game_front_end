@@ -4,20 +4,28 @@ import Login_screen from "./pages/login_screen/Login_box";
 import { useState } from "react";
 import { io } from "socket.io-client";
 const socket = io("https://tictac-toe-server.herokuapp.com");
-let competitor;
 
 function App() {
   const [Login, setLogin] = useState(null);
-  const [player, setplayer] = useState()
+  const [player, setplayer] = useState();
+  const [competitor, setCompetitor] = useState();
+  socket.on("competitor_name", (value) => {
+    console.log(competitor);
+    setCompetitor(value);
+  });
   function user_login(e) {
     setLogin(e.target[0].value);
     setplayer(e.target[2].value);
-    competitor=e.target[1].value
+    setCompetitor(e.target[1].value);
   }
   return (
     <div className="App">
       {Login ? (
-        <Tic_tac_toe_board socket={socket} player={player} competitor={competitor}/>
+        <Tic_tac_toe_board
+          socket={socket}
+          player={player}
+          competitor={competitor}
+        />
       ) : (
         <Login_screen socket={socket} user_login={user_login} />
       )}

@@ -1,9 +1,10 @@
 import React from "react";
 import Square from "./Square";
 import "./component_style.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Socket } from "socket.io-client";
 
 function Board({ socket, player, competitor }) {
   const [curr_player, setcurr_player] = useState("X");
@@ -11,6 +12,21 @@ function Board({ socket, player, competitor }) {
   const [winner, setwinner] = useState(null);
   const [Ready, setReady] = useState(false);
   const [Reset, setReset] = useState(false);
+  useEffect(() => {
+    if (competitor) {
+      toast.clearWaitingQueue();
+      toast.success(`${competitor} joined your match`, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  }, [competitor]);
+
   function onclick(id) {
     console.log(id);
     if (!Ready) {
@@ -82,7 +98,19 @@ function Board({ socket, player, competitor }) {
           );
         })}
       </div>
-      <h1>Your symbol is {player}</h1>
+
+      {winner ? (
+        <button className="rematch_btn" onClick={() => {
+          socket.emit("rematch_req")
+        }}>
+          Press for rematch{" "}
+        </button>
+      ) : (
+        <h1 className="heading">You are playing as {player}</h1>
+      )}
+      {competitor ? (
+        <p className="heading">You are playing against {competitor}</p>
+      ) : null}
       <ToastContainer
         position="top-center"
         autoClose={5000}

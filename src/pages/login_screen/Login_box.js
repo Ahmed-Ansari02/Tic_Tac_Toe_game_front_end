@@ -42,7 +42,6 @@ function Login_box({ socket, user_login }) {
                   (value) => value.name === e.target[1].value
                 )[0].room_id
               : socket.id;
-            console.log(room_id);
             socket.emit(
               "update_players",
               e.target[0].value,
@@ -79,7 +78,6 @@ function Login_box({ socket, user_login }) {
           <select
             name="players"
             onChange={(e) => {
-              console.log();
               if (Players_list.length !== 0) {
                 let symbol = Players_list.filter(
                   (value) => value.name === e.target.value

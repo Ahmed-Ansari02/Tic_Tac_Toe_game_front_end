@@ -32,3 +32,15 @@
     font-weight: bold;
     
 }
+.rematch_btn{
+    height: 30px;
+    width: 30%;
+    margin-top: 10px;
+    background-color: skyblue;
+    outline: none;
+    padding: none;
+    border: 1px black solid;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: bold;
+}
