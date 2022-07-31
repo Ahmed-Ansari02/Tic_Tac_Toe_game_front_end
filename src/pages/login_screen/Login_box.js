@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "./login_screen_style.css"
 let default_symbol = [
   <option name="X" key="1">
     X
@@ -25,7 +26,7 @@ function Login_box({ socket, user_login }) {
     );
   });
   return (
-    <div>
+    <div className="login_screen">
       <form
         className="form_box"
         onSubmit={(e) => {
@@ -52,14 +53,14 @@ function Login_box({ socket, user_login }) {
             return;
           } else if (e.target[0].value === "") {
             toast.error(`Please input a name`, {
-            position: "top-center",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
+              position: "top-center",
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            });
             return;
           }
           toast.error(`Player name ${e.target[0].value} already taken`, {

@@ -1,9 +1,10 @@
 import "./App.css";
 import Tic_tac_toe_board from "./pages/tic_tac_toe_board/Tic_tac_toe_board";
-import Login_screen from "./pages/login_screen/Login_screen";
+import Login_screen from "./pages/login_screen/Login_box";
 import { useState } from "react";
 import { io } from "socket.io-client";
 const socket = io("https://tictac-toe-server.herokuapp.com");
+let competitor;
 
 function App() {
   const [Login, setLogin] = useState(null);
@@ -11,11 +12,12 @@ function App() {
   function user_login(e) {
     setLogin(e.target[0].value);
     setplayer(e.target[2].value);
+    competitor=e.target[1].value
   }
   return (
     <div className="App">
       {Login ? (
-        <Tic_tac_toe_board socket={socket} player={player} />
+        <Tic_tac_toe_board socket={socket} player={player} competitor={competitor}/>
       ) : (
         <Login_screen socket={socket} user_login={user_login} />
       )}

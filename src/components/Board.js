@@ -5,7 +5,7 @@ import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-function Board({ socket, player }) {
+function Board({ socket, player, competitor }) {
   const [curr_player, setcurr_player] = useState("X");
   const [Markedarray, setMarkedarray] = useState(new Array(9).fill(null));
   const [winner, setwinner] = useState(null);
@@ -25,11 +25,25 @@ function Board({ socket, player }) {
         progress: undefined,
       });
     }
-    if (!winner && Ready && player === curr_player) {
-      socket.emit("board_state_update", id);
-      setMarkedarray((Markedarray) =>
-        Markedarray.map((value, index) => (index === id ? player : value))
-      );
+    if (!winner) {
+      if (player !== curr_player) {
+        toast.clearWaitingQueue();
+        toast.error(`It is ${competitor}'s turn. Please await your turn`, {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
+      if (Ready && player === curr_player) {
+        socket.emit("board_state_update", id);
+        setMarkedarray((Markedarray) =>
+          Markedarray.map((value, index) => (index === id ? player : value))
+        );
+      }
     }
   }
   if (Reset) {
