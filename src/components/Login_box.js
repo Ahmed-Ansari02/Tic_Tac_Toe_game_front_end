@@ -1,5 +1,7 @@
 import React from "react";
 import { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 let default_symbol = [
   <option name="X" key="1">
     X
@@ -35,7 +37,9 @@ function Login_box({ socket, user_login }) {
             e.target[0].value !== ""
           ) {
             let room_id = Players_list.length
-              ? Players_list.filter((value) => value.name === e.target[1].value)[0].room_id
+              ? Players_list.filter(
+                  (value) => value.name === e.target[1].value
+                )[0].room_id
               : socket.id;
             console.log(room_id);
             socket.emit(
@@ -47,11 +51,26 @@ function Login_box({ socket, user_login }) {
             user_login(e);
             return;
           } else if (e.target[0].value === "") {
-            alert("Please input a name");
-            return
+            toast.error(`Please input a name`, {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+            return;
           }
-
-          alert(`Player name ${e.target[0].value} already taken`);
+          toast.error(`Player name ${e.target[0].value} already taken`, {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
         }}>
         <input type="text" placeholder="Enter user name" name="username" />
         <div>
@@ -88,6 +107,19 @@ function Login_box({ socket, user_login }) {
 
         <input type="submit" />
       </form>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        limit={1}
+        theme="dark"
+      />
     </div>
   );
 }

@@ -2,14 +2,29 @@ import React from "react";
 import Square from "./Square";
 import "./component_style.css";
 import { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Board({ socket, player }) {
   const [curr_player, setcurr_player] = useState("X");
   const [Markedarray, setMarkedarray] = useState(new Array(9).fill(null));
   const [winner, setwinner] = useState(null);
   const [Ready, setReady] = useState(false);
-  const [Reset, setReset]=useState(false)
+  const [Reset, setReset] = useState(false);
   function onclick(id) {
+    console.log(id);
+    if (!Ready) {
+      toast.clearWaitingQueue();
+      toast.error("Please wait for other players to join", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
     if (!winner && Ready && player === curr_player) {
       socket.emit("board_state_update", id);
       setMarkedarray((Markedarray) =>
@@ -17,13 +32,15 @@ function Board({ socket, player }) {
       );
     }
   }
-  if (Reset){
-    alert("Oh no! your competitor has quit, you are being redirected to the login page to start a new game")
-    window.location.reload(); 
+  if (Reset) {
+    alert(
+      "Oh no! your competitor has quit, you are being redirected to the login page to start a new game"
+    );
+    window.location.reload();
   }
-  socket.on("Reset",(value)=>{
-      setReset(value)
-  })
+  socket.on("Reset", (value) => {
+    setReset(value);
+  });
 
   socket.on("sync_board_state", (board_state, winner, player) => {
     console.log(board_state);
@@ -52,6 +69,19 @@ function Board({ socket, player }) {
         })}
       </div>
       <h1>Your symbol is {player}</h1>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        limit={1}
+        theme="dark"
+      />
     </>
   );
 }
