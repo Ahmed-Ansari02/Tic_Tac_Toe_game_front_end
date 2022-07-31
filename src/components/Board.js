@@ -27,7 +27,6 @@ function Board({ socket, player, competitor }) {
   }, [competitor]);
 
   function onclick(id) {
-    console.log(id);
     if (!Ready) {
       toast.clearWaitingQueue();
       toast.error("Please wait for other players to join", {
@@ -72,7 +71,6 @@ function Board({ socket, player, competitor }) {
   });
 
   socket.on("sync_board_state", (board_state, winner, player) => {
-    console.log(board_state);
     if (board_state !== "wait for players") {
       setMarkedarray(board_state);
       setwinner(winner);

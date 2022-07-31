@@ -10,7 +10,6 @@ function App() {
   const [player, setplayer] = useState();
   const [competitor, setCompetitor] = useState();
   socket.on("competitor_name", (value) => {
-    console.log(competitor);
     setCompetitor(value);
   });
   function user_login(e) {
