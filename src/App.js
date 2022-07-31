@@ -26,6 +26,7 @@ function App() {
           socket={socket}
           player={player}
           competitor={competitor}
+          name={Login}
         />
       ) : (
         <Login_screen socket={socket} user_login={user_login} />

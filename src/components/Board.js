@@ -5,12 +5,13 @@ import { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-function Board({ socket, player, competitor }) {
+function Board({ socket, player, competitor, name }) {
   const [curr_player, setcurr_player] = useState("X");
   const [Markedarray, setMarkedarray] = useState(new Array(9).fill(null));
   const [winner, setwinner] = useState(null);
   const [Ready, setReady] = useState(false);
   const [Reset, setReset] = useState(false);
+  const [Winnings, setWinnings] = useState();
   useEffect(() => {
     if (competitor) {
       toast.clearWaitingQueue();
@@ -80,9 +81,18 @@ function Board({ socket, player, competitor }) {
   socket.on("Ready", (value) => {
     setReady(value);
   });
+  socket.on("score_count", (score_obj) => {
+    setWinnings(
+      <p className="heading">
+        Score: {name}: {score_obj[player]} & {competitor}:{" "}
+        {score_obj[player === "X" ? "O" : "X"]}
+      </p>
+    );
+  });
 
   return (
     <>
+      {Winnings}
       <h1 className="heading">
         {winner ? `winner is ${winner} !` : `Turn of ${curr_player}`}
       </h1>
@@ -109,7 +119,9 @@ function Board({ socket, player, competitor }) {
       )}
       {competitor ? (
         <p className="heading">You are playing against {competitor}</p>
-      ) : <p className="heading">Please wait for players to join</p>}
+      ) : (
+        <p className="heading">Please wait for players to join</p>
+      )}
       <ToastContainer
         position="top-center"
         autoClose={5000}
