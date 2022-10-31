@@ -21,8 +21,8 @@ function App() {
   }
   return (
     <div className="App">
-      <Navbar /> //Initially renders the login screen so user can be logged in.
-      {Login ? (
+      <Navbar /> 
+      {Login ? ( //Initially renders the login screen so player can be logged in.
         <Tic_tac_toe_board
           socket={socket}
           player={player}

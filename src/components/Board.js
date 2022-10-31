@@ -97,9 +97,9 @@ function Board({ socket, player, competitor, name }) {
       <h1 className="heading">
         {winner ? `winner is ${winner} !` : `Turn of ${curr_player}`}
       </h1>
-      <div className="board">  //conditionally renders the squares on the board grid based on if they are unmarked or marked with an X or O.
+      <div className="board">  
         {Markedarray.map((value, index) => {
-          return value ? (
+          return value ? ( //conditionally renders the squares on the board grid based on if they are unmarked or marked with an X or O.
             <Square id={index} key={index} marked={value} onclick={onclick} />
           ) : (
             <Square id={index} key={index} onclick={onclick} />

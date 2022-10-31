@@ -85,8 +85,8 @@ function Login_box({ socket, user_login }) {
           name="username"
           className="input_box"
         />
-        <div hidden={!Players_list.length}> //hide box to select a competitor if no one is on the list of available players.
-          <p>Select a player</p>
+        <div hidden={!Players_list.length}> 
+          <p>Select a player</p> 
           <select
             className="input_box"
             name="players"
@@ -121,7 +121,7 @@ function Login_box({ socket, user_login }) {
           </select>
         </div>
 
-        <button className="btn_basic">Enter</button> //Button to submit the players choice.
+        <button className="btn_basic">Enter</button> 
       </form>
       <ToastContainer
         position="top-center"
