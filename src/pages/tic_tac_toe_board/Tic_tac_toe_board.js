@@ -3,8 +3,8 @@ import Board from "../../components/Board";
 import "./board_styles.css";
 
 function Tic_tac_toe_board({ socket, player, competitor, name}) {
-  return (
-    <div className="board_segment">
+  return ( //renders the Tic Tac Toe board
+    <div className="board_segment"> 
       <Board socket={socket} player={player} competitor={competitor} name={name}/>
     </div>
   );

@@ -13,7 +13,7 @@ function Board({ socket, player, competitor, name }) {
   const [Reset, setReset] = useState(false);
   const [Winnings, setWinnings] = useState();
   useEffect(() => {
-    if (competitor) {
+    if (competitor) {    //if a player joins an awaiting players room , a toast message is displayed.
       toast.clearWaitingQueue();
       toast.success(`${competitor} joined your match`, {
         position: "top-center",
@@ -27,10 +27,11 @@ function Board({ socket, player, competitor, name }) {
     }
   }, [competitor]);
 
-  function onclick(id) {
-    if (!Ready) {
+  function onclick(id) {  //handles what happens when the Tic Toe board is interacted with
+  
+    if (!Ready) {     //if  no other player has joined the room, then ask player to wait for players to join.
       toast.clearWaitingQueue();
-      toast.error("Please wait for other players to join", {
+      toast.error("Please wait for other players to join", {  
         position: "top-center",
         autoClose: 2000,
         hideProgressBar: false,
@@ -40,8 +41,8 @@ function Board({ socket, player, competitor, name }) {
         progress: undefined,
       });
     }
-    if (!winner) {
-      if (player !== curr_player) {
+    if (!winner) {     
+      if (player !== curr_player) {    //if it isnt the players the turn then display a toast asking player to await their turn.
         toast.clearWaitingQueue();
         toast.error(`It is ${competitor}'s turn. Please await your turn`, {
           position: "top-center",
@@ -53,7 +54,7 @@ function Board({ socket, player, competitor, name }) {
           progress: undefined,
         });
       }
-      if (Ready && player === curr_player) {
+      if (Ready && player === curr_player) { //if room has two players and its is the players turn then allow the array storing the board state to be updated.
         socket.emit("board_state_update", id);
         setMarkedarray((Markedarray) =>
           Markedarray.map((value, index) => (index === id ? player : value))
@@ -61,7 +62,7 @@ function Board({ socket, player, competitor, name }) {
       }
     }
   }
-  if (Reset) {
+  if (Reset) { //if one player quits then display message saying that the competitor has quit and game window will reload.
     alert(
       "Oh no! your competitor has quit, you are being redirected to the login page to start a new game"
     );
@@ -71,7 +72,7 @@ function Board({ socket, player, competitor, name }) {
     setReset(value);
   });
 
-  socket.on("sync_board_state", (board_state, winner, player) => {
+  socket.on("sync_board_state", (board_state, winner, player) => { //Update the local board state to mirror the shared board state in the server whenever the competitor chooses a box to mark.
     if (board_state !== "wait for players") {
       setMarkedarray(board_state);
       setwinner(winner);
@@ -90,13 +91,13 @@ function Board({ socket, player, competitor, name }) {
     );
   });
 
-  return (
-    <>
+  return ( //handles rending of the UI
+    <>   
       {Winnings}
       <h1 className="heading">
         {winner ? `winner is ${winner} !` : `Turn of ${curr_player}`}
       </h1>
-      <div className="board">
+      <div className="board">  //conditionally renders the squares on the board grid based on if they are unmarked or marked with an X or O.
         {Markedarray.map((value, index) => {
           return value ? (
             <Square id={index} key={index} marked={value} onclick={onclick} />
@@ -106,7 +107,7 @@ function Board({ socket, player, competitor, name }) {
         })}
       </div>
 
-      {winner || Markedarray.filter((value) => value !== null).length === 9 ? (
+      {winner || Markedarray.filter((value) => value !== null).length === 9 ? (  //if all squares on board are filled or a winner has been determined then render rematch button.
         <button
           className="rematch_btn"
           onClick={() => {

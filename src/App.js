@@ -1,7 +1,7 @@
 import "./App.css";
 import Tic_tac_toe_board from "./pages/tic_tac_toe_board/Tic_tac_toe_board";
 import Login_screen from "./pages/login_screen/Login_box";
-import Navbar from "../src/components/nav_bar/Nav_bar"
+import Navbar from "../src/components/nav_bar/Nav_bar";
 import { useState } from "react";
 import { io } from "socket.io-client";
 const socket = io("https://tictac-toe-server.herokuapp.com");
@@ -14,13 +14,14 @@ function App() {
     setCompetitor(value);
   });
   function user_login(e) {
+    //Set the player name, competitor name and current player name using React useState hooks.
     setLogin(e.target[0].value);
     setplayer(e.target[2].value);
     setCompetitor(e.target[1].value);
   }
   return (
     <div className="App">
-    <Navbar/>
+      <Navbar /> //Initially renders the login screen so user can be logged in.
       {Login ? (
         <Tic_tac_toe_board
           socket={socket}
